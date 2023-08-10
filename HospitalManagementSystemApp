@@ -1,0 +1,89 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class HospitalManagementSystemApp extends JFrame {
+    private JTextField nameField;
+    private JTextArea addressArea;
+    private JCheckBox hasInsuranceCheckBox;
+    private JRadioButton maleRadioButton, femaleRadioButton;
+    private JComboBox<String> departmentComboBox;
+    private JButton submitButton;
+
+    public HospitalManagementSystemApp() {
+        setTitle("Hospital Management System");
+        setSize(400, 400);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new GridLayout(8, 2, 10, 10));
+
+        // Create components
+        JLabel nameLabel = new JLabel("Name:");
+        nameField = new JTextField();
+
+        JLabel addressLabel = new JLabel("Address:");
+        addressArea = new JTextArea(3, 20);
+        JScrollPane addressScrollPane = new JScrollPane(addressArea);
+
+        JLabel insuranceLabel = new JLabel("Insurance:");
+        hasInsuranceCheckBox = new JCheckBox();
+
+        JLabel genderLabel = new JLabel("Gender:");
+        maleRadioButton = new JRadioButton("Male");
+        femaleRadioButton = new JRadioButton("Female");
+        ButtonGroup genderGroup = new ButtonGroup();
+        genderGroup.add(maleRadioButton);
+        genderGroup.add(femaleRadioButton);
+
+        JLabel departmentLabel = new JLabel("Department:");
+        String[] departments = {"Cardiology", "Orthopedics", "Neurology", "Pediatrics"};
+        departmentComboBox = new JComboBox<>(departments);
+
+        submitButton = new JButton("Submit");
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Retrieve data and display in a dialog
+                String name = nameField.getText();
+                String address = addressArea.getText();
+                boolean hasInsurance = hasInsuranceCheckBox.isSelected();
+                String gender = maleRadioButton.isSelected() ? "Male" : "Female";
+                String department = (String) departmentComboBox.getSelectedItem();
+
+                String result = "Name: " + name +
+                                "\nAddress: " + address +
+                                "\nHas Insurance: " + (hasInsurance ? "Yes" : "No") +
+                                "\nGender: " + gender +
+                                "\nDepartment: " + department;
+
+                JOptionPane.showMessageDialog(HospitalManagementSystemApp.this, result);
+            }
+        });
+
+        // Add components to the frame
+        add(nameLabel);
+        add(nameField);
+        add(addressLabel);
+        add(addressScrollPane);
+        add(insuranceLabel);
+        add(hasInsuranceCheckBox);
+        add(genderLabel);
+        add(maleRadioButton);
+        add(new JLabel()); // Empty label for spacing
+        add(femaleRadioButton);
+        add(departmentLabel);
+        add(departmentComboBox);
+        add(new JLabel()); // Empty label for spacing
+        add(submitButton);
+
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new HospitalManagementSystemApp();
+            }
+        });
+    }
+}
